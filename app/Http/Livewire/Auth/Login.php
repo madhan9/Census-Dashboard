@@ -47,4 +47,5 @@ class Login extends Component
     {
         return view('livewire.auth.login');
     }
+
 }

@@ -6,12 +6,14 @@ use App\Http\Livewire\Auth\ForgotPassword;
 use App\Http\Livewire\Auth\ResetPassword;
 use App\Http\Livewire\Auth\SignUp;
 use App\Http\Livewire\Auth\Login;
+use App\Http\Livewire\Auth\Logout;
+
 use App\Http\Livewire\Dashboard;
 
 
 use App\Http\Livewire\LaravelExamples\UserProfile;
 use App\Http\Livewire\LaravelExamples\UserManagement;
-
+use App\Http\Livewire\LaravelExamples\FormEditor;
 use Illuminate\Http\Request;
 
 /*
@@ -31,6 +33,7 @@ Route::get('/sign-up', SignUp::class)->name('sign-up');
 Route::post('/sign-up',[SignUp::class, 'register']);
 Route::get('/login', Login::class)->name("login");
 Route::post('/login', [Login::class, 'login']);
+Route::get('/logout', [Logout::class, 'logout']);
 Route::get('/login/forgot-password', ForgotPassword::class)->name('forgot-password');
  
 Route::get('/reset-password/{id}',ResetPassword::class)->name('reset-password')->middleware('signed');
@@ -38,5 +41,9 @@ Route::get('/reset-password/{id}',ResetPassword::class)->name('reset-password')-
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/census-dashboard', UserManagement::class)->name('census-dashboard');
+    Route::get('/content-edit/{id}', FormEditor::class)->name('content-edit');
+    Route::post('/form-save', [FormEditor::class,'update']);
+    
+    
 });
 

@@ -59,7 +59,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">{{$result->Q1_OPinCode}}</span>
                                         </td>
                                         <td class="text-center">
-                                            <a href="#" class="mx-3" data-bs-toggle="tooltip"
+                                            <a href="{{'content-edit/'.$result->UniqueId}}" class="mx-3" data-bs-toggle="tooltip"
                                                 data-bs-original-title="Edit user">
                                                 <i class="fas fa-edit text-secondary"></i>
                                             </a>

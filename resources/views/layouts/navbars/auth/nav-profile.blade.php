@@ -18,9 +18,9 @@
                 </div>
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body font-weight-bold px-0">
-                            <livewire:auth.logout />
-                        </a>
+                       
+                        <livewire:auth.logout />
+                       
                     </li>
                     <li class="nav-item d-xl-none ps-3 pe-0 d-flex align-items-center">
                         <a href="javascript:;" class="nav-link text-white p-0">
