@@ -77,24 +77,25 @@
                       </div>
                       <div class="card-body">
 
-                          <form wire:submit.prevent="register" action="#" method="POST" role="form text-left">
+                      <form action="{{url('sign-up')}}" method="POST" role="form text-left">
+                                @csrf
                               <div class="mb-3">
                                   <div class="@error('name') border border-danger rounded-3  @enderror">
-                                      <input wire:model="name" type="text" class="form-control" placeholder="Name"
+                                      <input name="name" type="text" class="form-control" placeholder="Name"
                                           aria-label="Name" aria-describedby="email-addon">
                                   </div>
                                   @error('name') <div class="text-danger">{{ $message }}</div> @enderror
                               </div>
                               <div class="mb-3">
                                   <div class="@error('email') border border-danger rounded-3 @enderror">
-                                      <input wire:model="email" type="email" class="form-control" placeholder="Email"
+                                      <input name="email" type="email" class="form-control" placeholder="Email"
                                           aria-label="Email" aria-describedby="email-addon">
                                   </div>
                                   @error('email') <div class="text-danger">{{ $message }}</div> @enderror
                               </div>
                               <div class="mb-3">
                                   <div class="@error('password') border border-danger rounded-3 @enderror">
-                                      <input wire:model="password" type="password" class="form-control"
+                                      <input name="password" type="password" class="form-control"
                                           placeholder="Password" aria-label="Password"
                                           aria-describedby="password-addon">
                                   </div>

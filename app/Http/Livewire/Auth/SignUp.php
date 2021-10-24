@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Livewire\Auth;
-
+use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class SignUp extends Component
 {
@@ -24,12 +25,18 @@ class SignUp extends Component
         }
     }
 
-    public function register() {
-        $this->validate();
+    public function register(Request $request) {
+        $validated = Validator::make($request->all(),$this->rules);
+     
+        if ($validated->fails()) {
+            return redirect('/sign-up')
+                    ->withErrors($validated)
+                    ->withInput();
+        }
         $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => Hash::make($this->password)
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
         ]);
 
         auth()->login($user);
