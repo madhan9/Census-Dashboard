@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\LaravelExamples;
-
+use Auth;
 use Livewire\Component;
 use App\Models\Census;
 use Illuminate\Http\Request;
@@ -21,6 +21,7 @@ class FormEditor extends Component
 
     public function update(Request $request)
     {
+        $user = Auth::user();
         
         $result = Census::where("RunID",$request->RunID)->first();
         

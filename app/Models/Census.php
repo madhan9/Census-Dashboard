@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Auth;
 class Census extends Model
 {
     protected $table="tblCensus";
@@ -20,9 +20,15 @@ class Census extends Model
         'IsUpdated','AIsUpdated','Sync_Date',"updated_at"
     ]; 
 
+    public function scopeStatus($query)
+    {
+        $user = Auth::user();
+        if($user->level == 1)
+            return $query->where("EntryStatus", "F");
+    }
 
     public static function getQueriedResult()
     {
-        return static::where("EntryStatus", "F")->get();
+        return static::status()->get();
     }
 }

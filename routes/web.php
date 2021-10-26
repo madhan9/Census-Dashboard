@@ -33,7 +33,7 @@ Route::get('/sign-up', SignUp::class)->name('sign-up');
 Route::post('/sign-up',[SignUp::class, 'register']);
 Route::get('/login', Login::class)->name("login");
 Route::post('/login', [Login::class, 'login']);
-Route::get('/logout', [Logout::class, 'logout']);
+
 Route::get('/login/forgot-password', ForgotPassword::class)->name('forgot-password');
  
 Route::get('/reset-password/{id}',ResetPassword::class)->name('reset-password')->middleware('signed');
@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/content-edit/{id}', FormEditor::class)->name('content-edit');
     Route::post('/form-save', [FormEditor::class,'update']);
     
+    Route::get('/logout', [Logout::class, 'logout'])->name("logout");
     
 });
 

@@ -101,6 +101,14 @@
                                   </div>
                                   @error('password') <div class="text-danger">{{ $message }}</div> @enderror
                               </div>
+                              <div>
+                                    <div class="@error('level')border border-danger rounded-3 @enderror mb-3">
+                                        <input name="level" id="Level" type="number" min="1" max="5" class="form-control"
+                                            placeholder="Level" aria-label="Level"
+                                            aria-describedby="level-addon">
+                                    </div>
+                                    @error('level') <div class="text-danger">{{ $message }}</div> @enderror
+                                </div>
                               <div class="form-check form-check-info text-left">
                                   <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
                                       checked>
