@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\LaravelExamples;
 use Auth;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\Census;
-use Illuminate\Http\Request;
+use App\Models\CensusUpdated;
+
 class FormEditor extends Component
 {
     protected $result;
@@ -24,6 +26,16 @@ class FormEditor extends Component
         $user = Auth::user();
         
         $result = Census::where("RunID",$request->RunID)->first();
+
+        $result->update(["edited_flag"=>"S"]);
+
+        $input_exists = $result->getAttributes();
+
+        unset($input_exists["edited_flag"]);
+        $input_exists["edited_level"] = $user->level; 
+
+        $record_updated = new CensusUpdated();
+        $record_updated->fill($input_exists)->save();
         
         $input =[];
         $input["Q1_OName"] = $request->Q1_OName;
@@ -31,7 +43,7 @@ class FormEditor extends Component
         $input["Q1_OPinCode"]= $request->Q1_OPinCode;
         $input["Q1_OPhno"]= $request->Q1_OPhno;
         
-        $result->update($input);
+        $record_updated->update($input);
 
         return redirect('/census-dashboard');
     }
