@@ -23,7 +23,7 @@ class Census extends Model
     public function scopeStatus($query)
     {
         $user = Auth::user();
-        if($user->level == 1)
+        if($user->level == 1 || $user->level == 2)
             return $query->where("EntryStatus", "F")->where("edited_flag",null);
     }
 

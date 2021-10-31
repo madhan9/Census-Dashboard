@@ -25,10 +25,9 @@ class CensusUpdated extends Model
     public function scopeStatus($query)
     {
         $user = Auth::user();
-        if($user->level == 2)
-            return $query->where("EntryStatus", "F")->where("edited_level",1);
+       
         if($user->level == 3)
-            return $query->where("EntryStatus", "F")->where("edited_level",2);
+            return $query->where("EntryStatus", "F")->whereIn("edited_level",[1,2]);
         if($user->level == 4)
             return $query->where("EntryStatus", "F")->where("edited_level",3);
         if($user->level == 5)
