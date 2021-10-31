@@ -12,44 +12,48 @@
                     </div>
                 </div> -->
                 <div class="card-body px-0 pt-0 pb-2 mt-3">
-                    <div class="table-responsive p-0">
+                    <div class="p-0">
                     <div class="col-xl-6 col-lg-6 col-md-6 d-flex flex-column mx-auto">
                         <form action="{{url('form-save')}}" method="POST" role="form text-left">
                                 @csrf
                                 <input type="hidden" name="RunID" value="{{$result->RunID}}" >
-                            <div class="mb-3">
-                                <label for="Q1_OName">Outlet Name</label>
-                                <div class="@error('Q1_OName') border border-danger rounded-3 @enderror">
-                                    <input name="Q1_OName" id="Q1_OName" type="text" class="form-control"
-                                        placeholder="Outlet Name" value="{{$result->Q1_OName}}">
-                                </div>
-                                @error('Q1_OName') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="Q1_OAddress">Address</label>
-                                <div class="@error('Q1_OAddress') border border-danger rounded-3 @enderror">
-                                    <input name="Q1_OAddress" id="Q1_OAddress" type="text" class="form-control"
-                                        placeholder="Address" value="{{$result->Q1_OAddress}}">
-                                </div>
-                                @error('Q1_OAddress') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="Q1_OPinCode">Pincode</label>
-                                <div class="@error('Q1_OPinCode') border border-danger rounded-3 @enderror">
-                                    <input name="Q1_OPinCode" id="Q1_OPinCode" type="text" class="form-control"
-                                        placeholder="Pincode" value="{{$result->Q1_OPinCode}}" maxlength="6" minlength="6" onkeypress="isNumberKey(event)" >
-                                </div>
-                                @error('Q1_OPinCode') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                            <div class="mb-3">
-                                <label for="Q1_OPhno">Phone No</label>
-                                <div class="@error('Q1_OPhno') border border-danger rounded-3 @enderror">
-                                    <input name="Q1_OPhno" id="Q1_OPhno" type="Q1_OPhno" class="form-control"
-                                        placeholder="Phone No"  value="{{$result->Q1_OPhno}}" maxlength="10" minlength="10" onkeypress="isNumberKey(event)">
-                                </div>
-                                @error('Q1_OPhno') <div class="text-danger">{{ $message }}</div> @enderror
-                            </div>
-                            
+                          
+                            @foreach($quest_prop as $prop)
+                               
+                                    <div class="mb-3">
+                                        <label for="Q1_OName">{{$prop->Q_text}}</label>
+                                        <div class="@error('Q1_OName') border border-danger rounded-3 @enderror">
+                                            @if($prop->Q_type == 1)
+                                                @if($prop->Q_opt_type == 1)
+                                                    <select name="{{$prop->Q_name}}" class="form-control">
+                                                        <option value="0">Please Select</option>
+                                                        @foreach(json_decode($prop->options) as $key=>$option)
+                                                            @if($result[$prop->Q_name] == $key)
+                                                                <option selected value="{{$key}}">{{$option}}</option>
+                                                            @else
+                                                                <option value="{{$key}}">{{$option}}</option>    
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                 @else
+                                                    @foreach(json_decode($prop->options) as $key=>$option)
+                                                    <div class="form-check form-check-info text-left">
+                                                         <input class="form-check-input" name="{{$prop->Q_name}}[]" type="checkbox" value="{{str_pad($key,$prop->Qzeropad_len,'0',STR_PAD_LEFT)}}" id="{{$prop->Q_name}}_{{$key+1}}"
+                                                        >
+                                                        <label class="form-check-label" for="{{$prop->Q_name}}_{{$key+1}}">
+                                                            {{$option}}
+                                                        </label>
+                                                    </div>
+                                                    @endforeach
+                                                @endif
+                                            @elseif($prop->Q_type == 2)
+                                                <input name="{{$prop->Q_name}}" id="{{$prop->Q_name}}" type="text" class="form-control"
+                                                placeholder="Outlet Name" value="{{$result[$prop->Q_name]}}">
+                                            @endif
+                                        </div>
+                                      
+                                    </div>
+                            @endforeach
                             <div class="w-100">
                                 
                                 <button type="submit"
@@ -67,6 +71,7 @@
     </div>
 
 </div>
+
 <script>
 function isNumberKey(evt)
 {
@@ -75,5 +80,6 @@ function isNumberKey(evt)
        evt.preventDefault();
     
 }
-  
+
 </script>
+
